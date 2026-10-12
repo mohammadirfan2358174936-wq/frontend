@@ -75,8 +75,8 @@ function App() {
             </nav>
 
             <div className="flex items-center gap-2.5 sm:gap-3">
-              {/* Primary "Create Event" CTA for Organizers (hidden for attendees) */}
-              {user?.role !== "ATTENDEE" && (
+              {/* Primary "Create Event" CTA - only for logged in Organizers / Admins */}
+              {isOrganizerOrAdmin && (
                 <button
                   onClick={handleCreateEventClick}
                   className="inline-flex h-10 items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-3.5 sm:px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-indigo-950/40 hover:brightness-110 transition"
@@ -143,7 +143,7 @@ function App() {
         <footer id="about" className="mt-24 border-t border-white/[0.07]">
           <div className="container-page flex flex-col gap-4 py-8 text-sm text-white/40 sm:flex-row sm:items-center sm:justify-between">
             <Link to="/" className="font-display font-semibold text-white/75">eventforge</Link>
-            <span>Find your people. Create an event. Make a night of it.</span>
+            <span>Find your people. Make a night of it.</span>
             <span>© {new Date().getFullYear()} Eventforge</span>
           </div>
         </footer>
