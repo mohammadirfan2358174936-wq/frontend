@@ -47,6 +47,9 @@ function App() {
       setAuthOpen(true);
       return;
     }
+    if (user.role === "ATTENDEE") {
+      return;
+    }
     setCreateEventOpen(true);
   }
 
@@ -72,14 +75,16 @@ function App() {
             </nav>
 
             <div className="flex items-center gap-2.5 sm:gap-3">
-              {/* Primary "Create Event" CTA for Organizers */}
-              <button
-                onClick={handleCreateEventClick}
-                className="inline-flex h-10 items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-3.5 sm:px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-indigo-950/40 hover:brightness-110 transition"
-              >
-                <Plus size={16} />
-                <span>Create Event</span>
-              </button>
+              {/* Primary "Create Event" CTA for Organizers (hidden for attendees) */}
+              {user?.role !== "ATTENDEE" && (
+                <button
+                  onClick={handleCreateEventClick}
+                  className="inline-flex h-10 items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-3.5 sm:px-4 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-indigo-950/40 hover:brightness-110 transition"
+                >
+                  <Plus size={16} />
+                  <span>Create Event</span>
+                </button>
+              )}
 
               {/* Organizer / Attendee quick view buttons */}
               {user && (
@@ -146,7 +151,7 @@ function App() {
 
       {/* Modals */}
       {authOpen && <AuthDialog onClose={() => setAuthOpen(false)} />}
-      {createEventOpen && (
+      {createEventOpen && isOrganizerOrAdmin && (
         <CreateEventModal
           onClose={() => setCreateEventOpen(false)}
         />
